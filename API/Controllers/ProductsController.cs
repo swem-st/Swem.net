@@ -23,31 +23,22 @@ namespace API.Controllers
         return Ok(prodcuts);
       } 
 
-      
-      // [HttpGet]
-      // public async Task<ActionResult<List<Product>>> GetProductByType()
-      // {
-      //   var prodcuts = await _repo.GetProductAsync();
-      //   return Ok(prodcuts);
-      // } 
-
-
       [HttpGet("{id}")]
       public async Task<ActionResult<Product>> GetProduct(int id)
       {  
         return await _repo.GetProfuctByIdAsync(id);         
       } 
 
-      // [HttpGet("{brands}")]
-      // public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrand()
-      // {  
-      //   return Ok(await _repo.GetProductBrandAsync());
-      // }
-
-      // [HttpGet("{types}")]
-      // public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
-      // {  
-      //   return Ok(await _repo.GetProductTypesAsync());
-      // }    
+      [HttpGet("brands")]
+      public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
+      {  
+        return Ok(await _repo.GetProductBrandsAsync());
+      }
+              
+      [HttpGet("types")]
+      public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
+      {  
+        return Ok(await _repo.GetProductTypesAsync());
+      }    
     }
 }
