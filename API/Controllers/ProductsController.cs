@@ -1,5 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,8 @@ namespace API.Controllers
         private readonly IGenericRepository<ProductBrand> _productBrandRepo;
         private readonly IGenericRepository<ProductType> _productTypeRepo;
 
-        public ProductsController(IGenericRepository<Product> productRepo,
+        public ProductsController(
+        IGenericRepository<Product> productRepo,
         IGenericRepository<ProductBrand> productBrandRepo,
         IGenericRepository<ProductType> productTypeRepo)
         {       
@@ -26,14 +28,18 @@ namespace API.Controllers
       [HttpGet]
       public async Task<ActionResult<List<Product>>> GetProducts()
       {
-        var prodcuts = await _productRepo.ListAllAsync();
+        var spec = new ProductsWithTypesAndBrandsSpecification();
+
+        var prodcuts = await _productRepo.ListAsync(spec);
         return Ok(prodcuts);
       } 
 
       [HttpGet("{id}")]
       public async Task<ActionResult<Product>> GetProduct(int id)
       {  
-        return await _productRepo.GetByIdAsync(id);         
+        var spec = new ProductsWithTypesAndBrandsSpecification(id);
+
+        return await _productRepo.GetEntityWithSpec(spec);         
       } 
 
       [HttpGet("brands")]
