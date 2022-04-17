@@ -53,9 +53,9 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
             }
-            catch(Exception ex)
-            {   
-                var logger = loggerFactory.CreateLogger<StoreContext>();
+            catch (Exception ex)
+            {
+                var logger = loggerFactory.CreateLogger<StoreContextSeed>();
                 logger.LogError(ex.Message);
             }
         }
