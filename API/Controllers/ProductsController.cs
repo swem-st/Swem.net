@@ -32,6 +32,7 @@ namespace API.Controllers
         var spec = new ProductsWithTypesAndBrandsSpecification();
 
         var prodcuts = await _productRepo.ListAsync(spec);
+        
         return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(prodcuts));
       } 
 
