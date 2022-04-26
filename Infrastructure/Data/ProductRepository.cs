@@ -11,6 +11,7 @@ namespace Infrastructure.Data
     public class ProductRepository : IProductRepository
     {
         private readonly StoreContext _context;
+
         public ProductRepository(StoreContext context)
         {
             _context = context;
@@ -18,28 +19,29 @@ namespace Infrastructure.Data
 
         public async Task<IReadOnlyList<Product>> GetProductAsync()
         {
+           // var products = _context.Products.OrderBy()
             return await _context.Products
-            .Include(p=> p.ProductType)
-            .Include(b=> b.ProductBrand)
-            .ToListAsync();
+                .Include(p => p.ProductType)
+                .Include(b => b.ProductBrand)
+                .ToListAsync();
         }
 
         public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync()
         {
-          return await _context.ProductBrands.ToListAsync();
+            return await _context.ProductBrands.ToListAsync();
         }
 
         public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
         {
-          return await _context.ProductTypes.ToListAsync();
+            return await _context.ProductTypes.ToListAsync();
         }
 
         public async Task<Product> GetProfuctByIdAsync(int id)
         {
-          return await _context.Products
-          .Include(p=> p.ProductType)
-          .Include(b=> b.ProductBrand)
-          .FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Products
+                .Include(p => p.ProductType)
+                .Include(b => b.ProductBrand)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }
